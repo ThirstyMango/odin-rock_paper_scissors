@@ -31,3 +31,11 @@ function getHumanChoice() {
 
   return humanChoice;
 }
+
+function getComputerChoice() {
+  // Choosing a random valid option from the array.
+  const OPTIONS = ["rock", "paper", "scissors"];
+  const randomIndex = Math.floor(Math.random() * 3);
+  const computerChoice = OPTIONS[randomIndex];
+  return computerChoice;
+}
