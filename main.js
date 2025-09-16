@@ -41,7 +41,7 @@ function getComputerChoice() {
 
 function playGame() {
   const CONFIRM_MESSAGE =
-    "Welcome player! \n You have been chosen to play a well know game, Rock, Paper, Scissors against our fellow champion. \n Do you want to play?";
+    "Welcome player! \n You have been chosen to play a well known game, Rock, Paper, Scissors against our fellow champion. \n Do you want to play?";
 
   // If player does not want to play
   if (!confirm(CONFIRM_MESSAGE)) {
