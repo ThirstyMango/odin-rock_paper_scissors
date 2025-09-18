@@ -59,7 +59,7 @@ const playGame = function playGame() {
     currentRound++; 
     const humanChoiceLowerCase = humanChoice.toLowerCase();
     let winner = null; // Presume tie
-    let gameState = `A tie! ${humanChoice} does nothing to ${computerChoice}`;
+    let gameState = `A tie! ${humanChoice} does nothing to ${computerChoice}. The score is human - ${humanScore}:${computerScore} - computer.`;
 
     switch (humanChoiceLowerCase) {
       case 'rock':
