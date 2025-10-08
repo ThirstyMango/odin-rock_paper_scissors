@@ -130,5 +130,3 @@ function playGame() {
   alert(`You have lost ${humanScore}:${computerScore}`);
   return "Computer";
 } // -> str; Winner of the game
-
-playGame();
