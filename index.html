@@ -8,34 +8,50 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="wrapper">
-        <figure class="container">
-          <figcaption class="container__caption">
-            Rock, Paper, Scissors.
-          </figcaption>
-          <div class="container__content">
-            <div class="content">
-              <div class="content__block content--user"></div>
-              <div class="content__block content--computer"></div>
+      <div class="container">
+        <!-- Header -->
+        <h2 class="container__header">Rock, Paper, Scissors.</h2>
+        <div class="container__info">
+          Enjoy a game against computer. Best of 5 rounds.
+        </div>
+
+        <!-- Result of the game -->
+        <div class="container__body">
+          <div class="game">
+            <div class="game__score">
+              <div class="score-board" data-player="user">
+                <span class="score-board__header">User score</span>
+                <span class="score-board__icon">ICON</span>
+                <span class="score-board__score">3</span>
+              </div>
+
+              <div class="score-board" data-player="computer">
+                <span class="score-board__header">Computer score</span>
+                <span class="score-board__icon">ICON</span>
+                <span class="score-board__score">2</span>
+              </div>
             </div>
+
+            <div class="game__block game__block--user">User choice</div>
+            <div class="game__block game__block--computer">Computer choice</div>
           </div>
-          <div class="container__form">
-            <div class="form">
-              <input
-                type="text"
-                id="userInputBtn"
-                class="form__input"
-                placeholder="Enter margin"
-              />
-              <input
-                type="button"
-                id="userSubmitBtn"
-                class="form__submit"
-                value="Generate"
-              />
-            </div>
+        </div>
+
+        <!-- User input -->
+        <div class="container__form">
+          <div class="form">
+            <div class="form__header">What will you choose?</div>
+            <button class="button" id="btn-rock" data-choice="rock">
+              Rock
+            </button>
+            <button class="button" id="btn-paper" data-choice="paper">
+              Paper
+            </button>
+            <button class="button" id="btn-scissors" data-choice="scissors">
+              Scissors
+            </button>
           </div>
-        </figure>
+        </div>
       </div>
     </div>
   </body>
