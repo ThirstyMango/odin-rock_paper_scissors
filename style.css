@@ -11,9 +11,13 @@
   --blue: rgb(63, 114, 175);
   --dark-blue: rgb(17, 45, 78);
 
-  --padding-small: 0.5rem;
-  --padding-medium: 1rem;
-  --padding-big: 2rem;
+  --space-small: 0.5rem;
+  --space-medium: 1rem;
+  --space-big: 2rem;
+}
+
+img {
+  width: 80%;
 }
 
 *,
@@ -32,6 +36,18 @@ li {
   list-style-type: none;
 }
 
+.margin-bottom-s {
+  margin-bottom: var(--space-small);
+}
+
+.margin-bottom-m {
+  margin-bottom: var(--space-medium);
+}
+
+.margin-bottom-l {
+  margin-bottom: var(--space-large);
+}
+
 /* Content */
 .wrapper {
   min-width: 100vw;
@@ -43,27 +59,119 @@ li {
 
 .container {
   background-color: var(--light);
-  padding: var(--padding-medium);
+  padding: var(--space-big);
   border: 0.3rem solid var(--light-grey);
   border-radius: 0.6rem;
   text-align: center;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.container__header {
+  padding: var(--space-small);
+}
+
 .game__score {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .score-board {
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+}
+
+.score-board__score {
+  position: relative;
+  top: -1rem;
+  font-size: 2rem;
+}
+
+.score-board__score--left {
+  left: -2rem;
+}
+
+.score-board__score--right {
+  left: 2rem;
+}
+
+.score-board__icon {
+  position: absolute;
+  bottom: 0;
+}
+
+.score-board__icon--right {
+  right: 0;
+}
+
+.score-board__icon--left {
+  left: 0;
 }
 
 .player-choices {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.player-choices__block {
+  width: 8rem;
+  height: 6rem;
+  border-radius: 0.3rem;
+  background-color: var(--light-grey);
+  background-size: cover;
+  color: var(--light);
+  padding: var(--space-small);
+}
+
+.player-choices__block--rock {
+  background-image: url(./imgs/img_rock.jpg);
+}
+
+.player-choices__block--paper {
+  background-image: url(./imgs/img_paper.jpg);
+}
+
+.player-choices__block--scissors {
+  background-image: url(./imgs/img_scissors.jpg);
+}
+
+.form {
+  display: flex;
+  gap: var(--space-small);
+}
+
+.button {
+  font-family: "Oswald", sans-serif;
+  background-color: var(--light);
+  min-height: 4rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  padding: var(--space-small);
+  flex: 1;
+  border-radius: 0.3rem;
+  background-size: cover;
+  color: var(--light);
+}
+
+.button:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.button[data-choice="rock"] {
+  background-image: url(./imgs/img_rock.jpg);
+}
+
+.button[data-choice="paper"] {
+  background-image: url(./imgs/img_paper.jpg);
+}
+
+.button[data-choice="scissors"] {
+  background-image: url(./imgs/img_scissors.jpg);
 }

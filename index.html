@@ -20,33 +20,48 @@
       <div class="container">
         <!-- Header -->
         <h1 class="container__header">Rock, Paper, Scissors.</h1>
-        <div class="container__info">
-          Enjoy a game against computer. Best of 5 rounds.
-        </div>
+        <h3 class="container__info">Enjoy a game against computer.</h3>
+        <h3 class="container__info margin-bottom-m">Best of 5 rounds.</h3>
 
         <!-- Result of the game -->
-        <div class="container__body">
+        <div class="container__body margin-bottom-m">
           <div class="game">
-            <div class="game__score">
+            <div class="game__score margin-bottom-m">
               <div class="score-board" data-player="user">
-                <span class="score-board__header">User score</span>
-                <span class="score-board__icon">ICON</span>
-                <span class="score-board__score">3</span>
+                <span class="score-board__score score-board__score--left"
+                  >0</span
+                >
+                <img
+                  class="score-board__icon score-board__icon--right"
+                  src="./imgs/img_user.avif"
+                  alt="user_icon"
+                />
               </div>
 
               <div class="score-board" data-player="computer">
-                <span class="score-board__header">Computer score</span>
-                <span class="score-board__icon">ICON</span>
-                <span class="score-board__score">2</span>
+                <span class="score-board__score score-board__score--right"
+                  >0</span
+                >
+                <img
+                  class="score-board__icon score-board__icon--left"
+                  src="./imgs/img_robot.png"
+                  alt="user_icon"
+                />
               </div>
             </div>
 
             <div class="game__player-choices">
               <div class="player-choices">
-                <div class="player-choices__block" data-player="user">
+                <div
+                  class="player-choices__block player-choices__block--rock"
+                  data-player="user"
+                >
                   User choice
                 </div>
-                <div class="player-choices__block" data-player="computer">
+                <div
+                  class="player-choices__block player-choices__block--scissors"
+                  data-player="computer"
+                >
                   Computer choice
                 </div>
               </div>
@@ -56,16 +71,16 @@
 
         <!-- User input -->
         <div class="container__form">
+          <h4 class="form__header margin-bottom-s">What will you choose?</h4>
           <div class="form">
-            <div class="form__header">What will you choose?</div>
             <button class="button" id="btn-rock" data-choice="rock">
-              Rock
+              <span>Rock</span>
             </button>
             <button class="button" id="btn-paper" data-choice="paper">
-              Paper
+              <span>Paper</span>
             </button>
             <button class="button" id="btn-scissors" data-choice="scissors">
-              Scissors
+              <span>Scissors</span>
             </button>
           </div>
         </div>
