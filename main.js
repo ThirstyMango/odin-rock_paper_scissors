@@ -1,35 +1,11 @@
-function getHumanChoice() {
-  // The input has to be either rock, paper or scissors. The case does not matter.
-  function validateHumanChoice(humanChoice) {
-    if (humanChoice === null) {
-      return false;
-    }
-    const humanChoiceLowerCase = humanChoice.toLowerCase();
-    const VALID_INPUTS = ["rock", "paper", "scissors"];
-    return VALID_INPUTS.includes(humanChoiceLowerCase);
+// The input has to be either rock, paper or scissors. The case does not matter.
+function validateHumanChoice(humanChoice) {
+  if (humanChoice === null) {
+    return false;
   }
-
-  // Promt messages
-  const HELLO_MESSAGE = "What is your choice?";
-  const ERROR_MESSAGE =
-    "This input is not supported, please, enter either 'rock', 'paper' or 'scissors'. The case does not matter. ";
-  const THREAD = "You cannot leave until you play!";
-
-  // Ask user
-  let humanChoice = prompt(HELLO_MESSAGE);
-
-  // Repeat the promt until the input is either rock, paper or scissors.
-  while (!validateHumanChoice(humanChoice)) {
-    if (humanChoice === null) {
-      // User tried to flee.
-      humanChoice = prompt(THREAD);
-    } else {
-      humanChoice = prompt(ERROR_MESSAGE);
-    }
-  }
-
-  return humanChoice;
-} // -> "rock" | "paper" | "scissors"
+  const VALID_INPUTS = ["rock", "paper", "scissors"];
+  return VALID_INPUTS.includes(humanChoiceLowerCase);
+} // -> true | false
 
 function getComputerChoice() {
   // Choosing a random valid option from the array.
@@ -39,27 +15,28 @@ function getComputerChoice() {
   return computerChoice;
 } // -> "rock" | "paper" | "scissors"
 
-function playGame() {
-  const CONFIRM_MESSAGE =
-    "Welcome player! \n You have been chosen to play a well known game, Rock, Paper, Scissors against our fellow champion. \n Do you want to play?";
-
-  // If player does not want to play
-  if (!confirm(CONFIRM_MESSAGE)) {
-    return;
-  }
-
+function createGame() {
   const ROUNDS = 5;
   const enoughToWin = Math.floor(ROUNDS / 2) + 1;
   let humanScore = 0;
   let computerScore = 0;
 
-  function playRound(humanChoice, computerChoice) {
-    const humanChoiceLowerCase = humanChoice.toLowerCase();
+  const board = document.querySelector(".form");
+  board.addEventListener("click", playRound);
+
+  function playRound(event) {
+    const humanChoice = event.target.getAttribute("data-choice");
+
+    if (!validateHumanChoice(humanChoice)) {
+      throw new Error("You cannot manipulate this game!");
+    }
+
+    const computerChoice = getComputerChoice();
     let winner = null; // Presume tie
-    let gameState = `A tie! ${humanChoice} does nothing to ${computerChoice}`; // Alert later
+    let gameState = "A tie!";
 
     // compare plays, determine winner if no tie, update his score
-    switch (humanChoiceLowerCase) {
+    switch (humanChoice) {
       case "rock":
         switch (computerChoice) {
           case "paper":
@@ -99,34 +76,12 @@ function playGame() {
 
     // If winner, change gameState variable
     if (winner) {
-      const humanState = winner === "Human" ? "win" : "lose";
-      const winSymbol =
-        winner === "Human" ? humanChoice.toLowerCase() : computerChoice;
-      const loseSymbol =
-        winner === "Human" ? computerChoice : humanChoice.toLowerCase();
-
-      gameState = `Computer played ${computerChoice}. You ${humanState}, ${winSymbol} beats ${loseSymbol}. The score is human - ${humanScore}:${computerScore} - computer.`;
+      gameState = winner === "Human" ? "You win." : "You lose.";
     }
 
-    alert(gameState); // Notify user of result
+    updateScore(humanScore, computerScore);
+    showGameState(gameState);
   } // -> null
-
-  while (humanScore !== enoughToWin && computerScore !== enoughToWin) {
-    // while no winner
-    // getPlays
-    const humanChoice = getHumanChoice();
-    const computerChoice = getComputerChoice();
-
-    // And play one round
-    playRound(humanChoice, computerChoice);
-  }
-
-  // Last message alerted
-  if (humanScore === enoughToWin) {
-    alert(`You have won ${humanScore}:${computerScore}. Congratulations!`);
-    return "Human";
-  }
-
-  alert(`You have lost ${humanScore}:${computerScore}`);
-  return "Computer";
 } // -> str; Winner of the game
+
+const game = createGame();
