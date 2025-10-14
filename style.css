@@ -14,6 +14,10 @@
   --space-small: 0.5rem;
   --space-medium: 1rem;
   --space-big: 2rem;
+
+  --winner-color: rgb(179, 245, 179);
+  --loser-color: rgb(248, 165, 165);
+  --neutral-color: rgb(97, 97, 97);
 }
 
 img {
@@ -48,6 +52,10 @@ li {
   margin-bottom: var(--space-large);
 }
 
+.hidden {
+  display: none;
+}
+
 /* Content */
 .wrapper {
   min-width: 100vw;
@@ -64,6 +72,14 @@ li {
   border-radius: 0.6rem;
   text-align: center;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.container--winner {
+  border: 0.3rem solid var(--winner-color);
+}
+
+.container--loser {
+  border: 0.3rem solid var(--loser-color);
 }
 
 .container__header {
@@ -121,11 +137,27 @@ li {
 .player-choices__block {
   width: 8rem;
   height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 0.3rem;
   background-color: var(--light-grey);
   background-size: cover;
   color: var(--light);
   padding: var(--space-small);
+  border: 0.2rem solid transparent;
+}
+
+.player-choices__block--winner {
+  border: 0.2rem solid var(--winner-color);
+}
+
+.player-choices__block--loser {
+  border: 0.2rem solid var(--loser-color);
+}
+
+.player-choices__block--neutral {
+  border: 0.2rem solid var(--neutral-color);
 }
 
 .player-choices__block--rock {
@@ -159,7 +191,7 @@ li {
   color: var(--light);
 }
 
-.button:hover {
+.button:not(.button--disabled):hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -174,4 +206,24 @@ li {
 
 .button[data-choice="scissors"] {
   background-image: url(./imgs/img_scissors.jpg);
+}
+
+.button--disabled {
+  pointer-events: none;
+}
+
+.button--restart {
+  padding: 0;
+  min-height: 0;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  position: absolute;
+  background-color: var(--light-blue);
+  border: none;
+}
+
+.button__svg {
+  height: 100%;
+  width: 100%;
 }
