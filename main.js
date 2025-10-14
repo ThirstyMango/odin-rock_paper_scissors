@@ -98,13 +98,13 @@ function showRestartButton() {
   DOM.restartButton.classList.remove("hidden");
 }
 
-function getComputerChoice() {
+const getComputerChoice = function getComputerChoice() {
   // Choosing a random valid option from the array.
   const OPTIONS = ["rock", "paper", "scissors"];
   const randomIndex = Math.floor(Math.random() * 3);
   const computerChoice = OPTIONS[randomIndex];
   return computerChoice;
-} // -> "rock" | "paper" | "scissors"
+}; // -> 'rock' | 'paper' | 'scissors'
 
 function createGame() {
   const ROUNDS = 5;
@@ -214,7 +214,7 @@ function createGame() {
         }
     }
 
-    // If winner, change gameState variable
+    // If winner alerted message has to change
     if (winner) {
       gameState = winner === "Human" ? "You win." : "You lose.";
     }
