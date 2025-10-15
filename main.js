@@ -1,4 +1,4 @@
-DOM = {
+const DOM = {
   humanChoiceBlock: document.querySelector("#human-choice"),
   computerChoiceBlock: document.querySelector("#computer-choice"),
   humanCounter: document.querySelector("#human-score"),
@@ -11,7 +11,22 @@ DOM = {
   board: document.querySelector(".form"),
 };
 
-// The input has to be either rock, paper or scissors. The case does not matter.
+const ModCls = {
+  playerChoiceBG: [
+    "player-choices__block--rock",
+    "player-choices__block--paper",
+    "player-choices__block--scissors",
+  ],
+  playerChoiceRES: [
+    "player-choices__block--winner",
+    "player-choices__block--loser",
+    "player-choices__block--neutral",
+  ],
+  containerRES: ["container--winner", "container--loser"],
+};
+
+// Input has to be either rock, paper or scissors.
+// Just in case of manipulated input.
 function validateHumanChoice(humanChoice) {
   if (humanChoice === null) {
     return false;
@@ -21,21 +36,18 @@ function validateHumanChoice(humanChoice) {
 } // -> true | false
 
 function showChoices(humanChoice, computerChoice) {
-  // remove the last choice
-  const modClasses = [
-    "player-choices__block--rock",
-    "player-choices__block--paper",
-    "player-choices__block--scissors",
-  ];
-  DOM.humanChoiceBlock.classList.remove(...modClasses);
-  DOM.computerChoiceBlock.classList.remove(...modClasses);
+  // remove classes from last turn
+  DOM.humanChoiceBlock.classList.remove(...ModCls.playerChoiceBG);
+  DOM.computerChoiceBlock.classList.remove(...ModCls.playerChoiceBG);
 
+  // show current turn choices
   DOM.humanChoiceBlock.classList.add(`player-choices__block--${humanChoice}`);
   DOM.humanChoiceBlock.textContent = humanChoice.toUpperCase();
   DOM.computerChoiceBlock.classList.add(
     `player-choices__block--${computerChoice}`
   );
   DOM.computerChoiceBlock.textContent = computerChoice.toUpperCase();
+  return;
 }
 
 function showScore(humanScore, computerScore) {
@@ -48,13 +60,8 @@ function showRoundCount(cRound) {
 }
 
 function showRoundWinner(winner) {
-  const modClasses = [
-    "player-choices__block--winner",
-    "player-choices__block--loser",
-    "player-choices__block--neutral",
-  ];
-  DOM.humanChoiceBlock.classList.remove(...modClasses);
-  DOM.computerChoiceBlock.classList.remove(...modClasses);
+  DOM.humanChoiceBlock.classList.remove(...ModCls.playerChoiceRES);
+  DOM.computerChoiceBlock.classList.remove(...ModCls.playerChoiceRES);
 
   switch (winner) {
     case "Human":
@@ -69,17 +76,10 @@ function showRoundWinner(winner) {
       DOM.humanChoiceBlock.classList.add("player-choices__block--neutral");
       DOM.computerChoiceBlock.classList.add("player-choices__block--neutral");
   }
+  return;
 }
 
 function showGameWinner(gameWinner) {
-  if (!gameWinner) {
-    DOM.containerInfo.textContent = "A tie.";
-    return;
-  }
-
-  const modClasses = ["container--winner", "container--loser"];
-  DOM.container.classList.remove(...modClasses);
-
   switch (gameWinner) {
     case "Human":
       DOM.container.classList.add("container--winner");
@@ -108,10 +108,10 @@ const getComputerChoice = function getComputerChoice() {
 
 function createGame() {
   const ROUNDS = 5;
+  const enoughToWin = 5;
   let humanScore = 0;
   let computerScore = 0;
   let cRound = 1;
-  const enoughToWin = 5;
 
   DOM.board.addEventListener("click", playRound);
 
@@ -129,34 +129,30 @@ function createGame() {
     DOM.choiceButtons.forEach((button) =>
       button.classList.remove("button--disabled")
     );
-
     return;
   }
 
   function restartGame() {
+    cRound = 1;
     humanScore = 0;
     computerScore = 0;
     showScore(humanScore, computerScore);
 
-    DOM.restartButton.removeEventListener("click", restartGame);
     DOM.restartButton.classList.add("hidden");
 
-    const modClasses = ["container--winner", "container--loser"];
-    DOM.container.classList.remove(...modClasses);
+    DOM.container.classList.remove(...ModCls.containerRES);
 
-    // remove the last choice
-    const modClassesButton = [
-      "player-choices__block--rock",
-      "player-choices__block--paper",
-      "player-choices__block--scissors",
-      "player-choices__block--winner",
-      "player-choices__block--loser",
-    ];
-    DOM.humanChoiceBlock.classList.remove(...modClassesButton);
-    DOM.computerChoiceBlock.classList.remove(...modClassesButton);
+    DOM.humanChoiceBlock.classList.remove(
+      ...ModCls.playerChoiceBG,
+      ...ModCls.playerChoiceRES
+    );
+    DOM.computerChoiceBlock.classList.remove(
+      ...ModCls.playerChoiceBG,
+      ...ModCls.playerChoiceRES
+    );
 
     DOM.humanChoiceBlock.textContent = "Human choice";
-    DOM.computerChoiceBlock.textContent = "ComputerChoice";
+    DOM.computerChoiceBlock.textContent = "Computer choice";
 
     DOM.roundCounter.textContent = "Round 1.";
 
@@ -167,13 +163,13 @@ function createGame() {
   function playRound(event) {
     const humanChoice = event.target.getAttribute("data-choice");
 
+    // no button was clicked
     if (!validateHumanChoice(humanChoice)) {
       return;
     }
 
     const computerChoice = getComputerChoice();
-    let winner = null; // Presume tie
-    let gameState = "A tie!";
+    let winner = null;
 
     // compare plays, determine winner if no tie, update his score
     switch (humanChoice) {
@@ -212,11 +208,6 @@ function createGame() {
             winner = "Human";
             break;
         }
-    }
-
-    // If winner alerted message has to change
-    if (winner) {
-      gameState = winner === "Human" ? "You win." : "You lose.";
     }
 
     // informing the user
