@@ -25,6 +25,12 @@ const ModCls = {
   containerRES: ["container--winner", "container--loser"],
 };
 
+const WIN_MAP = {
+  rock: "scissors",
+  paper: "rock",
+  scissors: "paper",
+};
+
 // Input has to be either rock, paper or scissors.
 // Just in case of manipulated input.
 function validateHumanChoice(humanChoice) {
@@ -107,20 +113,19 @@ const getComputerChoice = function getComputerChoice() {
 }; // -> 'rock' | 'paper' | 'scissors'
 
 function createGame() {
-  const ROUNDS = 5;
   const enoughToWin = 5;
   let humanScore = 0;
   let computerScore = 0;
   let cRound = 1;
 
   DOM.board.addEventListener("click", playRound);
+  DOM.restartButton.addEventListener("click", restartGame);
 
   function blockGame() {
     DOM.board.removeEventListener("click", playRound);
     DOM.choiceButtons.forEach((button) =>
       button.classList.add("button--disabled")
     );
-    DOM.restartButton.addEventListener("click", restartGame);
     return;
   }
 
@@ -160,6 +165,11 @@ function createGame() {
     unBlockGame();
   }
 
+  function determineWinner(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) return null;
+    return WIN_MAP[humanChoice] === computerChoice ? "Human" : "Computer";
+  }
+
   function playRound(event) {
     const humanChoice = event.target.getAttribute("data-choice");
 
@@ -169,46 +179,10 @@ function createGame() {
     }
 
     const computerChoice = getComputerChoice();
-    let winner = null;
+    let winner = determineWinner(humanChoice, computerChoice);
 
-    // compare plays, determine winner if no tie, update his score
-    switch (humanChoice) {
-      case "rock":
-        switch (computerChoice) {
-          case "paper":
-            computerScore++;
-            winner = "Computer";
-            break;
-          case "scissors":
-            humanScore++;
-            winner = "Human";
-            break;
-        }
-        break;
-      case "paper":
-        switch (computerChoice) {
-          case "rock":
-            humanScore++;
-            winner = "Human";
-            break;
-          case "scissors":
-            computerScore++;
-            winner = "Computer";
-            break;
-        }
-        break;
-      case "scissors":
-        switch (computerChoice) {
-          case "rock":
-            computerScore++;
-            winner = "Computer";
-            break;
-          case "paper":
-            humanScore++;
-            winner = "Human";
-            break;
-        }
-    }
+    if (winner === "Human") humanScore++;
+    else if (winner === "Computer") computerScore++;
 
     // informing the user
     showScore(humanScore, computerScore);
@@ -223,8 +197,8 @@ function createGame() {
       return;
     }
     cRound++;
-    showRoundCount(cRound, ROUNDS);
+    showRoundCount(cRound);
   } // -> null
 } // -> str; Winner of the game
 
-const game = createGame();
+createGame();
